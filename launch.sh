@@ -41,11 +41,11 @@ fi
 
 # --- 4. Upload script and slurm file ---
 echo "Uploading files..."
-sed "s|__HF_TOKEN__|$HF_TOKEN|g" submit.slurm > temp_submit.slurm
-scp temp_submit.slurm "$REMOTE:$SCRATCH/submit.slurm"
+sed "s|__HF_TOKEN__|$HF_TOKEN|g" eval.slurm > temp_submit.slurm
+scp temp_submit.slurm "$REMOTE:$SCRATCH/eval.slurm"
 scp "$SCRIPT_TO_RUN" "$REMOTE:$SCRATCH/"
 rm temp_submit.slurm
 
 # --- 5. Submit ---
 echo "Submitting job..."
-ssh "$REMOTE" "cd $SCRATCH && sbatch --export=ALL submit.slurm"
+ssh "$REMOTE" "cd $SCRATCH && sbatch --export=ALL eval.slurm"

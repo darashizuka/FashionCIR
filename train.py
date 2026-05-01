@@ -330,6 +330,8 @@ def main():
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--clip_model", type=str, default="ViT-B-32")
     parser.add_argument("--clip_pretrained", type=str, default="laion2b_s34b_b79k")
+    parser.add_argument("--clip_checkpoint", type=str, default="",
+                        help="Path to caption-finetuned CLIP checkpoint (from finetune3.py)")
     parser.add_argument("--num_workers", type=int, default=4)
     parser.add_argument("--max_samples", type=int, default=0,
                         help="Limit dataset size for debugging (0 = use all)")
@@ -344,6 +346,12 @@ def main():
         args.clip_model, pretrained=args.clip_pretrained
     )
     tokenizer = open_clip.get_tokenizer(args.clip_model)
+
+    if args.clip_checkpoint and os.path.exists(args.clip_checkpoint):
+        print(f"Loading caption-finetuned CLIP from: {args.clip_checkpoint}")
+        ckpt = torch.load(args.clip_checkpoint, map_location=device, weights_only=False)
+        clip_model.load_state_dict(ckpt["clip_state_dict"])
+
     clip_model = clip_model.to(device).eval()
     for p in clip_model.parameters():
         p.requires_grad = False

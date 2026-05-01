@@ -1,0 +1,32 @@
+# Model checkpoints
+*.pth
+*.pt
+
+# Output directories
+output*/
+eval_results/
+qualitative/
+
+# Training artifacts
+training_curves.png
+*.out
+*.err
+
+# Data
+datasets/
+*.jpg
+*.jpeg
+*.png
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Environment
+my_env/
+.env
+hf_cache/
+
+# Cluster config
+config.sh

@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=fashioncir
+#SBATCH --job-name=fashioncir-ft
 #SBATCH --partition=commons
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:lovelace:1
 #SBATCH --mem=64G
 #SBATCH --cpus-per-task=8
-#SBATCH --time=15:00:00
+#SBATCH --time=20:00:00
 #SBATCH --output=/scratch/sd205/fashioncir/logs/%j.out
 #SBATCH --error=/scratch/sd205/fashioncir/logs/%j.err
 
@@ -16,14 +16,19 @@ export HF_TOKEN="__HF_TOKEN__"
 SCRATCH="/scratch/sd205/fashioncir"
 
 echo "Job $SLURM_JOB_ID started on $(hostname) at $(date)"
-echo "GPU: $(nvidia-smi --query-gpu=name --format=csv,noheader)"
+echo "GPU: $(nvidia-smi --query-gpu=name,memory.total --format=csv,noheader)"
 
-$SCRATCH/my_env/bin/python3 -u "$SCRATCH/train.py" \
+python "$SCRATCH/finetune.py" \
     --data_dir "$SCRATCH/datasets/facap/facap" \
-    --output_dir "$SCRATCH/output" \
-    --epochs 10 \
-    --batch_size 64 \
-    --num_workers 8 \
-    --max_samples 0
+    --output_dir "$SCRATCH/output_finetune" \
+    --checkpoint "$SCRATCH/output/best_model.pth" \
+    --epochs 20 \
+    --batch_size 32 \
+    --fusion_lr 1e-5 \
+    --clip_lr 2e-6 \
+    --grad_accum 2 \
+    --unfreeze_vision 2 \
+    --patience 5 \
+    --num_workers 4
 
 echo "Job $SLURM_JOB_ID finished at $(date)"
