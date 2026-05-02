@@ -2,7 +2,7 @@
 
 Composed Image Retrieval (CIR) system that takes a **reference fashion image** and a **modification text** (e.g., "make it shorter with a v-neckline") and retrieves matching target images from a catalog.
 
-Built on [CLIP](https://github.com/mlfoundations/open_clip) (ViT-B/32) with a trainable fusion module, evaluated on the [FACap](https://github.com/layer6ai-labs/FACap) dataset (Fashion200K images, 338K samples, 6 garment categories).
+Built on [CLIP](https://github.com/mlfoundations/open_clip) (ViT-B/32) with a trainable fusion module, evaluated on the [FACap](https://github.com/fgxaos/facap-sigir25-gennext) dataset (Fashion200K images, 338K samples, 6 garment categories).
 
 
 ## Results
