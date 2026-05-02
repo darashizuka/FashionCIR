@@ -63,7 +63,7 @@ pip install open-clip-torch matplotlib numpy pillow
 
 ## Dataset
 
-Download the [FACap dataset](https://github.com/layer6ai-labs/FACap):
+Download the [FACap dataset](https://github.com/fgxaos/facap-sigir25-gennext):
 
 ```
 data_dir/
